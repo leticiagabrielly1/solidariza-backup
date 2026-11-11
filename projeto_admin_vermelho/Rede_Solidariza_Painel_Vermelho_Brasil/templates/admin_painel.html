@@ -1,0 +1,10 @@
+{% extends 'base.html' %}{% block content %}
+<div class="page-heading"><h1>Central administrativa</h1><p>Gestão da unidade <strong>{{ ponto }}</strong>. Doações, entregas e estoque em um só lugar.</p></div>
+<div class="admin-kpis"><article class="card"><small>ENTREGAS REGISTRADAS</small><strong>{{ resumo.total or 0 }}</strong><span>Na sua unidade</span></article><article class="card"><small>AGUARDANDO CONFIRMAÇÃO</small><strong>{{ resumo.pendentes or 0 }}</strong><span>Precisam de atenção</span></article><article class="card"><small>ENTREGAS CONFIRMADAS</small><strong>{{ resumo.entregues or 0 }}</strong><span>Recebidas no estoque</span></article></div>
+<h2 class="admin-section-title">Gerenciar operações</h2><div class="admin-actions">
+<a class="admin-action" href="{{ url_for('admin_doacoes') }}"><span>♡</span><strong>Doações recebidas</strong><small>Pix, roupas e alimentos; consulte os registros</small><b>Consultar →</b></a>
+<a class="admin-action" href="{{ url_for('admin_entregas') }}"><span>✓</span><strong>Confirmar doações</strong><small>Valide entregas antes de atualizar o estoque</small><b>Gerenciar →</b></a>
+<a class="admin-action" href="{{ url_for('admin_estoque') }}"><span>▦</span><strong>Controle de estoque</strong><small>Confira quantidades e registre ajustes</small><b>Abrir estoque →</b></a>
+<a class="admin-action" href="{{ url_for('administrar_unidades') }}"><span>⌖</span><strong>Unidades Senac</strong><small>Veja estados e cadastre endereços verificados</small><b>Ver unidades →</b></a></div>
+<section class="card"><h2>Entregas recentes</h2><div class="table-wrap"><table><thead><tr><th>Código</th><th>Doador</th><th>Tipo</th><th>Prazo</th><th>Situação</th></tr></thead><tbody>{% for r in recentes %}<tr><td>{{ r.codigo }}</td><td>{{ r.nome }}</td><td>{{ r.tipo }}</td><td>{{ r.prazo[:16] }}</td><td><span class="admin-status">{{ r.status }}</span></td></tr>{% else %}<tr><td colspan="5">Nenhuma entrega registrada para esta unidade.</td></tr>{% endfor %}</tbody></table></div></section>
+{% endblock %}
